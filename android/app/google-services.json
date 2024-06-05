@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "461468564546",
+    "project_id": "stylishecommerce",
+    "storage_bucket": "stylishecommerce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461468564546:android:81a54affeb8a89960081db",
+        "android_client_info": {
+          "package_name": "com.example.stylish_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRhjD9JqVgUqtIBZGkBL1QQNj7rHbji18"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
