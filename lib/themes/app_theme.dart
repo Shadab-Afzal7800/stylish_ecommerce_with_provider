@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppTheme {
-  static ThemeData get lightTheme {
-    return ThemeData(primaryColor: Color(0xffF83758), textTheme: TextTheme());
-  }
-}
+final ThemeData lightTheme =
+    ThemeData(primarySwatch: Colors.blue, brightness: Brightness.light);
+final ThemeData darkTheme =
+    ThemeData(primarySwatch: Colors.blue, brightness: Brightness.dark);

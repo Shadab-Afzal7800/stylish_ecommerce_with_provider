@@ -7,17 +7,22 @@ import 'package:stylish_flutter/screens/all_products.dart';
 import 'package:stylish_flutter/screens/cart_screen.dart';
 import 'package:stylish_flutter/screens/favorites_screen.dart';
 import 'package:stylish_flutter/services/auth_services/logout_services.dart';
-import 'package:stylish_flutter/utils/widgets/category_widget.dart';
-import 'package:stylish_flutter/utils/widgets/deal_of_the_day.dart';
-import 'package:stylish_flutter/utils/widgets/products_card.dart';
+import 'package:stylish_flutter/widgets/category_widget.dart';
+import 'package:stylish_flutter/widgets/deal_of_the_day.dart';
+import 'package:stylish_flutter/widgets/products_card.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
   final UserModel? userModel;
   final User? firebaseUser;
-  const HomePage({
+  ValueChanged<bool> onThemeChanged;
+  bool isDarkMode;
+  HomePage({
     Key? key,
     required this.userModel,
     required this.firebaseUser,
+    required this.onThemeChanged,
+    this.isDarkMode = false,
   }) : super(key: key);
 
   @override
@@ -41,6 +46,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _pageController = PageController();
+    _buildHomeContent;
   }
 
   @override
@@ -52,7 +58,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 238, 237, 237),
+      // backgroundColor: const Color.fromARGB(255, 238, 237, 237),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -85,18 +91,24 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 ListTile(
-                  leading: const Icon(Icons.home),
-                  title: const Text('Home'),
-                  onTap: () {
-                    // Navigate to Home
-                  },
+                  leading: const Icon(Icons.work_history_rounded),
+                  title: const Text('Order History'),
+                  onTap: () {},
                 ),
                 ListTile(
-                  leading: const Icon(Icons.settings),
-                  title: const Text('Settings'),
+                  leading: const Icon(Icons.sunny),
+                  title: const Text('DarkMode'),
                   onTap: () {
                     // Navigate to Settings
                   },
+                  trailing: Switch(
+                      value: widget.isDarkMode,
+                      onChanged: (value) {
+                        setState(() {
+                          widget.isDarkMode = value;
+                          widget.onThemeChanged(widget.isDarkMode);
+                        });
+                      }),
                 ),
                 ListTile(
                   leading: const Icon(Icons.logout_rounded),
@@ -160,7 +172,7 @@ class _HomePageState extends State<HomePage> {
             label: 'Favorites',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.trolley),
+            icon: Icon(Icons.shopping_cart),
             label: 'Cart',
           ),
         ],
@@ -192,9 +204,9 @@ class _buildHomeContent extends StatelessWidget {
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(20),
                   fillColor: Colors.white,
-                  filled: true,
+                  // filled: true,
                   prefixIcon: Icon(Icons.search_rounded),
-                  suffixIcon: Icon(Icons.mic_none_rounded),
+                  suffixIcon: Icon(Icons.subdirectory_arrow_right),
                   hintText: "Search any Product...",
                   border: OutlineInputBorder(
                       borderSide: BorderSide.none,
@@ -204,40 +216,12 @@ class _buildHomeContent extends StatelessWidget {
               height: 20,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   "All Featured",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 30),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
-                SizedBox(
-                  width: 60,
-                ),
-                Container(
-                  height: 30,
-                  width: 60,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.white),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [Text("Sort"), Icon(Icons.sort_rounded)],
-                  ),
-                ),
-                Container(
-                  height: 30,
-                  width: 60,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.white),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [Text("Filter"), Icon(Icons.filter_alt_outlined)],
-                  ),
-                )
               ],
             ),
             SizedBox(

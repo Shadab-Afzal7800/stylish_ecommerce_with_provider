@@ -9,6 +9,7 @@ import 'package:stylish_flutter/services/auth_services/login_services.dart';
 
 class LoginScreen extends StatefulWidget {
   final UserModel? userModel;
+
   const LoginScreen({
     Key? key,
     this.userModel,
@@ -23,13 +24,26 @@ class _LoginScreenState extends State<LoginScreen> {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  void checkValues() {
+  bool _isLoading = false;
+  void checkValues() async {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
     if (email.isEmpty || password.isEmpty) {
       log("Please enter valid email and password");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Please enter valid email and password"),
+        backgroundColor: Color(0xffF83758),
+        duration: Duration(seconds: 3),
+      ));
     } else {
-      loginServices.login(context, email, password);
+      setState(() {
+        _isLoading = true;
+      });
+
+      await loginServices.login(context, email, password);
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -126,11 +140,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: BoxDecoration(
                         color: const Color(0xffF83758),
                         borderRadius: BorderRadius.circular(14)),
-                    child: const Center(
-                        child: Text(
-                      "LOGIN",
-                      style: TextStyle(color: Colors.white, fontSize: 25),
-                    )),
+                    child: Center(
+                        child: _isLoading
+                            ? CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.white),
+                              )
+                            : Text(
+                                "LOGIN",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              )),
                   ),
                 ),
               ),

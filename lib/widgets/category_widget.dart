@@ -15,7 +15,7 @@ class _CategoryWdigetState extends State<CategoryWdiget> {
   @override
   Widget build(BuildContext context) {
     final categoryProvider = Provider.of<CategoryProvider>(context);
-    log("first build");
+    log("Category Widget");
     return Container(
       height: 100,
       child: ListView.builder(

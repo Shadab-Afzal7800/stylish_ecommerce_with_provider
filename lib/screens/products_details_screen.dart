@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:stylish_flutter/models/products_model.dart';
+import 'package:stylish_flutter/provider/products_provider.dart';
+import 'package:stylish_flutter/screens/cart_screen.dart';
 
 class ProductsDetailsScreen extends StatefulWidget {
   final ProductsModel product;
@@ -19,13 +22,22 @@ class ProductsDetailsScreen extends StatefulWidget {
 class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
   @override
   Widget build(BuildContext context) {
+    final productsProvider = Provider.of<ProductsProvider>(context);
+    final isFavorite = productsProvider.isFavorite(widget.product);
+    final isInCart = productsProvider.isInCart(widget.product);
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 238, 237, 237),
+      // backgroundColor: const Color.fromARGB(255, 238, 237, 237),
       appBar: AppBar(
         actions: [
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Icon(Icons.trolley),
+            child: IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CartScreen()));
+              },
+              icon: Icon(Icons.shopping_cart),
+            ),
           )
         ],
       ),
@@ -58,13 +70,27 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                   ),
-                  Icon(Icons.favorite_border)
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          if (isFavorite) {
+                            productsProvider
+                                .removeProductsFromFavorites(widget.product);
+                          } else {
+                            productsProvider
+                                .addProductsToFavorites(widget.product);
+                          }
+                        });
+                      },
+                      icon: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: isFavorite ? Colors.red : null,
+                      ))
                 ],
               ),
               SizedBox(
                 height: 10,
               ),
-              Text("Vision Alta Men’s Shoes Size (All Colours)"),
               Row(
                 children: [
                   Icon(Icons.star),
@@ -103,7 +129,18 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                       onTap: () {},
                       child: Image.asset("assets/images/buy-now-button.png")),
                   GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("Added to Cart"),
+                          backgroundColor: Color(0xffF83758),
+                          duration: Duration(seconds: 2),
+                        ));
+                        setState(() {
+                          if (!isInCart) {
+                            productsProvider.addProductToCart(widget.product);
+                          }
+                        });
+                      },
                       child:
                           Image.asset("assets/images/go-to-cart-button.png")),
                 ],
@@ -118,7 +155,6 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
               SizedBox(
                 height: 15,
               ),
-              Image.asset("assets/images/Group 33820.png")
             ],
           ),
         ),

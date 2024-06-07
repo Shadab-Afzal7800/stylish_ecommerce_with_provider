@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stylish_flutter/provider/products_provider.dart';
@@ -14,8 +16,9 @@ class _ProductsWidgetState extends State<ProductsWidget> {
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<ProductsProvider>(context);
+    log("Products card");
     return Container(
-      clipBehavior: Clip.none,
+      // clipBehavior: Clip.none,
       height: MediaQuery.of(context).size.height / 2.2,
       // height: 320,
       child: ListView.builder(
@@ -23,6 +26,7 @@ class _ProductsWidgetState extends State<ProductsWidget> {
           itemCount: productsProvider.allProducts.length,
           itemBuilder: (context, index) {
             final products = productsProvider.allProducts[index];
+            final isFavorite = productsProvider.isFavorite(products);
             return GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -38,8 +42,8 @@ class _ProductsWidgetState extends State<ProductsWidget> {
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2.2,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -82,7 +86,23 @@ class _ProductsWidgetState extends State<ProductsWidget> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
-                                Icon(Icons.favorite_border)
+                                IconButton(
+                                    onPressed: () {
+                                      if (isFavorite) {
+                                        productsProvider
+                                            .removeProductsFromFavorites(
+                                                products);
+                                      } else {
+                                        productsProvider
+                                            .addProductsToFavorites(products);
+                                      }
+                                    },
+                                    icon: Icon(
+                                      isFavorite
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color: isFavorite ? Colors.red : null,
+                                    ))
                               ],
                             ),
                             SizedBox(

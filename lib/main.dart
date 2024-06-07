@@ -22,7 +22,8 @@ void main() async {
               apiKey: "AIzaSyCRhjD9JqVgUqtIBZGkBL1QQNj7rHbji18",
               appId: "1:461468564546:android:81a54affeb8a89960081db",
               messagingSenderId: "461468564546",
-              projectId: "stylishecommerce"))
+              projectId: "stylishecommerce",
+              storageBucket: "stylishecommerce.appspot.com"))
       : await Firebase.initializeApp();
   User? currentUser = FirebaseAuth.instance.currentUser;
   if (currentUser != null) {
@@ -40,9 +41,15 @@ void main() async {
 }
 
 //Not Logged In
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool isDarkMode = false;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -63,7 +70,7 @@ class MyApp extends StatelessWidget {
 }
 
 //Logged In
-class MyAppLoggedIn extends StatelessWidget {
+class MyAppLoggedIn extends StatefulWidget {
   final UserModel userModel;
   final User firebaseUser;
   const MyAppLoggedIn({
@@ -71,6 +78,13 @@ class MyAppLoggedIn extends StatelessWidget {
     required this.userModel,
     required this.firebaseUser,
   }) : super(key: key);
+
+  @override
+  State<MyAppLoggedIn> createState() => _MyAppLoggedInState();
+}
+
+class _MyAppLoggedInState extends State<MyAppLoggedIn> {
+  bool isDarkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +96,20 @@ class MyAppLoggedIn extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
       ],
       child: MaterialApp(
+        theme: ThemeData(
+            primarySwatch: Colors.blue,
+            brightness: isDarkMode ? Brightness.dark : Brightness.light),
         debugShowCheckedModeBanner: false,
-        home: HomePage(userModel: userModel, firebaseUser: firebaseUser),
+        home: HomePage(
+          userModel: widget.userModel,
+          firebaseUser: widget.firebaseUser,
+          onThemeChanged: (value) {
+            setState(() {
+              isDarkMode = value;
+            });
+          },
+          isDarkMode: isDarkMode,
+        ),
       ),
     );
   }

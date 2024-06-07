@@ -7,7 +7,7 @@ import 'package:stylish_flutter/models/user_model.dart';
 import 'package:stylish_flutter/screens/login.dart';
 
 class SignUpServices {
-  void signUp(
+  Future<bool> signUp(
     BuildContext context,
     String email,
     String password,
@@ -19,10 +19,6 @@ class SignUpServices {
         email: email,
         password: password,
       );
-    } on FirebaseAuthException catch (e) {
-      log(e.toString());
-    }
-    if (credentials != null) {
       String uid = credentials.user!.uid;
       UserModel newUser = UserModel(uid: uid, email: email, fullname: fullName);
       await FirebaseFirestore.instance
@@ -34,9 +30,18 @@ class SignUpServices {
         Navigator.popUntil(context, (route) => route.isFirst);
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
-          return const LoginScreen();
+          return LoginScreen();
         }));
       });
+      return true;
+    } on FirebaseAuthException catch (e) {
+      log(e.toString());
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message!)));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("An unexpected error occurred. Please try again.")));
     }
+    return false;
   }
 }

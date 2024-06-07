@@ -24,7 +24,8 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController cpasswordController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
-  void checkValues() {
+  bool _isLoading = false;
+  void checkValues() async {
     String? email = emailController.text.trim();
     String? password = passwordController.text.trim();
     String? confirmPassword = cpasswordController.text.trim();
@@ -37,10 +38,27 @@ class _SignupScreenState extends State<SignupScreen> {
         confirmPassword.isEmpty ||
         fullName.isEmpty) {
       log("Please fill all the fields");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Please fill all the fields"),
+        backgroundColor: Color(0xffF83758),
+        duration: Duration(seconds: 3),
+      ));
     } else if (password != confirmPassword) {
       log("Passwords do not match");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Passwords do not match"),
+        backgroundColor: Color(0xffF83758),
+        duration: Duration(seconds: 3),
+      ));
     } else {
-      signUpServices.signUp(context, email, password, fullName);
+      setState(() {
+        _isLoading = true;
+      });
+
+      await signUpServices.signUp(context, email, password, fullName);
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -169,11 +187,17 @@ class _SignupScreenState extends State<SignupScreen> {
                     decoration: BoxDecoration(
                         color: const Color(0xffF83758),
                         borderRadius: BorderRadius.circular(14)),
-                    child: const Center(
-                        child: Text(
-                      "CREATE ACCOUNT",
-                      style: TextStyle(color: Colors.white, fontSize: 25),
-                    )),
+                    child: Center(
+                        child: _isLoading
+                            ? CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.white),
+                              )
+                            : Text(
+                                "CREATE ACCOUNT",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              )),
                   ),
                 ),
               ),

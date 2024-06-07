@@ -9,12 +9,16 @@ class GetStarted extends StatelessWidget {
   final String email;
   UserModel? userModel;
   User? firebaseUser;
+  ValueChanged<bool>? onThemeChanged;
+  bool isDarkMode;
 
   GetStarted({
     Key? key,
     required this.email,
     this.userModel,
     this.firebaseUser,
+    this.onThemeChanged,
+    this.isDarkMode = false,
   }) : super(key: key);
 
   @override
@@ -61,7 +65,13 @@ class GetStarted extends StatelessWidget {
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) {
                           return HomePage(
-                              userModel: userModel, firebaseUser: firebaseUser);
+                            userModel: userModel,
+                            firebaseUser: firebaseUser,
+                            isDarkMode: isDarkMode,
+                            onThemeChanged: (value) {
+                              isDarkMode = value;
+                            },
+                          );
                         }));
                       },
                       child: Padding(
