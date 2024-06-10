@@ -1,19 +1,23 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-
 import 'package:stylish_flutter/models/user_model.dart';
 import 'package:stylish_flutter/screens/forgot_password.dart';
+import 'package:stylish_flutter/screens/login_with_phone.dart';
 import 'package:stylish_flutter/screens/signup_screen.dart';
 import 'package:stylish_flutter/services/auth_services/login_services.dart';
 
 class LoginScreen extends StatefulWidget {
   final UserModel? userModel;
+  ValueChanged<bool> onThemeChanged;
+  bool isDarkMode;
 
-  const LoginScreen({
-    Key? key,
+  LoginScreen({
+    super.key,
     this.userModel,
-  }) : super(key: key);
+    required this.onThemeChanged,
+    required this.isDarkMode,
+  });
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -30,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
     String password = passwordController.text.trim();
     if (email.isEmpty || password.isEmpty) {
       log("Please enter valid email and password");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Please enter valid email and password"),
         backgroundColor: Color(0xffF83758),
         duration: Duration(seconds: 3),
@@ -142,16 +146,46 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(14)),
                     child: Center(
                         child: _isLoading
-                            ? CircularProgressIndicator(
+                            ? const CircularProgressIndicator(
                                 valueColor:
                                     AlwaysStoppedAnimation(Colors.white),
                               )
-                            : Text(
+                            : const Text(
                                 "LOGIN",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 25),
                               )),
                   ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LoginWithPhone(
+                                isDarkMode: widget.isDarkMode,
+                                onThemeChanged: widget.onThemeChanged,
+                              )));
+                },
+                child: Material(
+                  elevation: 10.0,
+                  shadowColor: const Color(0xffF3F3F3),
+                  borderRadius: const BorderRadius.all(Radius.circular(14)),
+                  child: Container(
+                      height: 60,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14)),
+                      child: const Center(
+                        child: Text(
+                          "LOGIN with Phone",
+                          style: TextStyle(color: Colors.black, fontSize: 25),
+                        ),
+                      )),
                 ),
               ),
               const SizedBox(
@@ -199,6 +233,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             MaterialPageRoute(builder: (context) {
                           return SignupScreen(
                             userModel: widget.userModel,
+                            isDarkMode: widget.isDarkMode,
+                            onThemeChanged: widget.onThemeChanged,
                           );
                         }));
                       },

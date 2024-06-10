@@ -23,8 +23,8 @@ extension SortOptionExtension on SortOption {
 
 class AllProducts extends StatefulWidget {
   const AllProducts({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<AllProducts> createState() => _AllProductsState();
@@ -86,6 +86,50 @@ class _AllProductsState extends State<AllProducts> {
     });
   }
 
+  void _showFilterOptions(BuildContext context) {
+    showModalBottomSheet(
+      elevation: 5,
+      context: context,
+      builder: (BuildContext context) {
+        return Wrap(
+          children: [
+            ListTile(
+              title: const Text('Price less than 100'),
+              onTap: () {
+                // _filterProducts(1);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Rating greater than 4'),
+              onTap: () {
+                // _filterProducts(2);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _filterProducts(int filterOption) {
+    final productsProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
+    setState(() {
+      switch (filterOption) {
+        case 1:
+          productsProvider.allProducts
+              .removeWhere((product) => product.price! >= 100);
+          break;
+        case 2:
+          productsProvider.allProducts
+              .removeWhere((product) => product.rating!.rate! <= 4);
+          break;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<ProductsProvider>(context);
@@ -105,24 +149,30 @@ class _AllProductsState extends State<AllProducts> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [Text("Sort"), Icon(Icons.sort_rounded)],
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
-                Container(
-                  height: 30,
-                  width: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [Text("Filter"), Icon(Icons.filter_alt_outlined)],
+                GestureDetector(
+                  onTap: () => _showFilterOptions(context),
+                  child: Container(
+                    height: 30,
+                    width: 60,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text("Filter"),
+                        Icon(Icons.filter_alt_outlined)
+                      ],
+                    ),
                   ),
                 )
               ],
@@ -130,7 +180,7 @@ class _AllProductsState extends State<AllProducts> {
           ),
           Expanded(
             child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
@@ -182,15 +232,15 @@ class _AllProductsState extends State<AllProducts> {
                                 Text(
                                   products.title!,
                                   maxLines: 1,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15,
                                   ),
                                 ),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 Text(
                                   products.description!,
-                                  style: TextStyle(fontSize: 12),
+                                  style: const TextStyle(fontSize: 12),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -200,7 +250,7 @@ class _AllProductsState extends State<AllProducts> {
                                   children: [
                                     Text(
                                       "\u20B9${products.price}",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
                                       ),
@@ -228,14 +278,14 @@ class _AllProductsState extends State<AllProducts> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 Row(
                                   children: [
-                                    Icon(Icons.star),
-                                    SizedBox(width: 5),
+                                    const Icon(Icons.star),
+                                    const SizedBox(width: 5),
                                     Text(
                                       "${products.rating?.rate ?? 0} (${products.rating?.count ?? 0}) reviews",
-                                      style: TextStyle(fontSize: 12),
+                                      style: const TextStyle(fontSize: 12),
                                     ),
                                   ],
                                 ),

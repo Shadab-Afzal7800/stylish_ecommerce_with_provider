@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:stylish_flutter/models/user_model.dart';
 import 'package:stylish_flutter/provider/category_provider.dart';
 import 'package:stylish_flutter/provider/products_provider.dart';
@@ -58,10 +57,27 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => ProductsProvider())
       ],
       child: MaterialApp(
+        theme: ThemeData(
+            primarySwatch: Colors.blue,
+            brightness: isDarkMode ? Brightness.dark : Brightness.light),
         home: const SplashScreen(),
         routes: {
-          '/onboard': (context) => const Onboarding(),
-          '/home': (context) => const LoginScreen()
+          '/onboard': (context) => Onboarding(
+                onThemeChanged: (value) {
+                  setState(() {
+                    isDarkMode = value;
+                  });
+                },
+                isDarkMode: isDarkMode,
+              ),
+          '/login': (context) => LoginScreen(
+                onThemeChanged: (value) {
+                  setState(() {
+                    isDarkMode = value;
+                  });
+                },
+                isDarkMode: isDarkMode,
+              )
         },
         debugShowCheckedModeBanner: false,
       ),
@@ -74,10 +90,10 @@ class MyAppLoggedIn extends StatefulWidget {
   final UserModel userModel;
   final User firebaseUser;
   const MyAppLoggedIn({
-    Key? key,
+    super.key,
     required this.userModel,
     required this.firebaseUser,
-  }) : super(key: key);
+  });
 
   @override
   State<MyAppLoggedIn> createState() => _MyAppLoggedInState();

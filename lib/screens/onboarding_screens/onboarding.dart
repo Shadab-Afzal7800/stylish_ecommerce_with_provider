@@ -5,7 +5,13 @@ import 'package:stylish_flutter/screens/onboarding_screens/screen2.dart';
 import 'package:stylish_flutter/screens/onboarding_screens/screen3.dart';
 
 class Onboarding extends StatefulWidget {
-  const Onboarding({super.key});
+  ValueChanged<bool> onThemeChanged;
+  bool isDarkMode;
+  Onboarding({
+    super.key,
+    required this.onThemeChanged,
+    required this.isDarkMode,
+  });
 
   @override
   State<Onboarding> createState() => _OnboardingState();
@@ -29,7 +35,7 @@ class _OnboardingState extends State<Onboarding> {
                 _currentPage = page;
               });
             },
-            children: [Screen1(), const Screen2(), const Screen3()],
+            children: const [Screen1(), Screen2(), Screen3()],
           ),
           const SizedBox(
             height: 20,
@@ -56,7 +62,7 @@ class _OnboardingState extends State<Onboarding> {
                     if (_currentPage == 2)
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacementNamed(context, '/home');
+                          Navigator.pushReplacementNamed(context, '/login');
                         },
                         child: Container(
                           decoration: BoxDecoration(

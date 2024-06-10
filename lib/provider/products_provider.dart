@@ -17,9 +17,19 @@ class ProductsProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get erroeMessage => _errorMessage;
   double get totalAmount =>
+      // ignore: avoid_types_as_parameter_names
       _cartProducts.fold(0, (sum, item) => sum + item.price!);
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  List<ProductsModel> searchProducts(String query) {
+    // Filter products based on search query
+    return _allProducts
+        .where((product) =>
+            product.title != null &&
+            product.title!.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+  }
 
   ProductsProvider() {
     fetchProducts();

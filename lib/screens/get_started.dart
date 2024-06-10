@@ -13,13 +13,13 @@ class GetStarted extends StatelessWidget {
   bool isDarkMode;
 
   GetStarted({
-    Key? key,
+    super.key,
     required this.email,
     this.userModel,
     this.firebaseUser,
     this.onThemeChanged,
     this.isDarkMode = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

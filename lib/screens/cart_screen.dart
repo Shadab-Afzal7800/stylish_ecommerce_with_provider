@@ -13,7 +13,6 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.microtask(() =>
         Provider.of<ProductsProvider>(context, listen: false).fetchCart());
@@ -26,7 +25,7 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
         // backgroundColor: const Color.fromARGB(255, 238, 237, 237),
         body: cartProducts.isEmpty
-            ? Center(child: Text("Your Cart is empty!"))
+            ? const Center(child: Text("Your Cart is empty!"))
             : Column(
                 children: [
                   Padding(
@@ -34,18 +33,19 @@ class _CartScreenState extends State<CartScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Total Cart value",
                           style: TextStyle(fontSize: 20),
                         ),
                         Text(
                           "\u20B9${productsProvider.totalAmount.toStringAsFixed(0)}",
-                          style: TextStyle(fontSize: 25, color: Colors.green),
+                          style: const TextStyle(
+                              fontSize: 25, color: Colors.green),
                         ),
                       ],
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                   Expanded(
                     child: ListView.builder(
                         itemCount: cartProducts.length,
@@ -56,7 +56,7 @@ class _CartScreenState extends State<CartScreen> {
                                 const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Card(
                               elevation: 10,
-                              shadowColor: Color(0xffF83758),
+                              shadowColor: const Color(0xffF83758),
                               child: ListTile(
                                 leading: Image.network(
                                   product.image!,
@@ -70,7 +70,7 @@ class _CartScreenState extends State<CartScreen> {
                                       productsProvider
                                           .removeProductsFromCart(product);
                                     },
-                                    icon: Icon(Icons.delete)),
+                                    icon: const Icon(Icons.delete)),
                                 onTap: () {
                                   Navigator.push(
                                       context,

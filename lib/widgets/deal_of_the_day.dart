@@ -9,25 +9,25 @@ class DealOfTheDay extends StatefulWidget {
   State<DealOfTheDay> createState() => _DealOfTheDayState();
 }
 
-Duration countdownDuration = Duration(hours: 22, minutes: 55, seconds: 20);
+Duration countdownDuration =
+    const Duration(hours: 22, minutes: 55, seconds: 20);
 Timer? timer;
 
 class _DealOfTheDayState extends State<DealOfTheDay> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     startTimer();
   }
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (_) => updateTimer());
+    timer = Timer.periodic(const Duration(seconds: 1), (_) => updateTimer());
   }
 
   void updateTimer() {
     setState(() {
       if (countdownDuration.inSeconds > 0) {
-        countdownDuration = countdownDuration - Duration(seconds: 1);
+        countdownDuration = countdownDuration - const Duration(seconds: 1);
       } else {
         timer?.cancel();
       }
@@ -50,17 +50,18 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-          color: Color(0xff4392F9), borderRadius: BorderRadius.circular(10)),
+          color: const Color(0xff4392F9),
+          borderRadius: BorderRadius.circular(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Deal of the Day",
                 style: TextStyle(
                     fontSize: 25,
@@ -69,21 +70,21 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
               ),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.watch_later_outlined,
                     color: Colors.white,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
                     formatDuration(countdownDuration),
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
-                  Text(
+                  const Text(
                     "remaining",
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   )
@@ -92,11 +93,11 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
             ],
           ),
           Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(8)),
-            child: Row(
+            child: const Row(
               children: [
                 Text(
                   "VIEW all",

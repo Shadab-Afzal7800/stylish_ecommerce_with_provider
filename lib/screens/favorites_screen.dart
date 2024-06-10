@@ -13,7 +13,6 @@ class FavoritesScreen extends StatefulWidget {
 class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.microtask(() =>
         Provider.of<ProductsProvider>(context, listen: false).fetchFavorite());
@@ -26,7 +25,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     return Scaffold(
         // backgroundColor: const Color.fromARGB(255, 238, 237, 237),
         body: favoriteProducts.isEmpty
-            ? Center(
+            ? const Center(
                 child: Text("No Favorites yet!"),
               )
             : ListView.builder(
@@ -36,7 +35,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Card(
-                      shadowColor: Color(0xffF83758),
+                      shadowColor: const Color(0xffF83758),
                       elevation: 10,
                       child: ListTile(
                         leading: Image.network(
@@ -51,7 +50,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               productsProvider
                                   .removeProductsFromFavorites(product);
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.favorite,
                               color: Colors.red,
                             )),

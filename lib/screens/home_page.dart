@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:stylish_flutter/models/products_model.dart';
 import 'package:stylish_flutter/models/user_model.dart';
+import 'package:stylish_flutter/screens/accounts_screen.dart.dart';
 import 'package:stylish_flutter/screens/all_products.dart';
 import 'package:stylish_flutter/screens/cart_screen.dart';
 import 'package:stylish_flutter/screens/favorites_screen.dart';
+import 'package:stylish_flutter/searched_page.dart';
 import 'package:stylish_flutter/services/auth_services/logout_services.dart';
 import 'package:stylish_flutter/widgets/category_widget.dart';
 import 'package:stylish_flutter/widgets/deal_of_the_day.dart';
@@ -18,12 +19,12 @@ class HomePage extends StatefulWidget {
   ValueChanged<bool> onThemeChanged;
   bool isDarkMode;
   HomePage({
-    Key? key,
+    super.key,
     required this.userModel,
     required this.firebaseUser,
     required this.onThemeChanged,
     this.isDarkMode = false,
-  }) : super(key: key);
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -59,69 +60,69 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: const Color.fromARGB(255, 238, 237, 237),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  image: DecorationImage(
-                      image:
-                          AssetImage('assets/images/getstarted-background.png'),
-                      fit: BoxFit.cover)),
-              child: Text(
-                'Stylish',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            Column(
-              children: [
-                Card(
-                  elevation: 6,
-                  shadowColor: Color(0xffF83758),
-                  shape: Border.all(),
-                  child: ListTile(
-                    leading: const Icon(Icons.person_2_rounded),
-                    title: Text(widget.userModel?.fullname ?? "Guest"),
-                    iconColor: Color(0xffF83758),
-                  ),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.work_history_rounded),
-                  title: const Text('Order History'),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: const Icon(Icons.sunny),
-                  title: const Text('DarkMode'),
-                  onTap: () {
-                    // Navigate to Settings
-                  },
-                  trailing: Switch(
-                      value: widget.isDarkMode,
-                      onChanged: (value) {
-                        setState(() {
-                          widget.isDarkMode = value;
-                          widget.onThemeChanged(widget.isDarkMode);
-                        });
-                      }),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.logout_rounded),
-                  title: const Text('Logout'),
-                  onTap: () {
-                    logout.logout(context);
-                  },
-                )
-              ],
-            )
-          ],
-        ),
-      ),
+      // drawer: Drawer(
+      //   child: ListView(
+      //     padding: EdgeInsets.zero,
+      //     children: <Widget>[
+      //       const DrawerHeader(
+      //         decoration: BoxDecoration(
+      //             color: Colors.transparent,
+      //             image: DecorationImage(
+      //                 image:
+      //                     AssetImage('assets/images/getstarted-background.png'),
+      //                 fit: BoxFit.cover)),
+      //         child: Text(
+      //           'Stylish',
+      //           style: TextStyle(
+      //             color: Colors.white,
+      //             fontSize: 24,
+      //           ),
+      //         ),
+      //       ),
+      //       Column(
+      //         children: [
+      //           Card(
+      //             elevation: 6,
+      //             shadowColor: const Color(0xffF83758),
+      //             shape: Border.all(),
+      //             child: ListTile(
+      //               leading: const Icon(Icons.person_2_rounded),
+      //               title: Text(widget.userModel?.fullname ?? "Guest"),
+      //               iconColor: const Color(0xffF83758),
+      //             ),
+      //           ),
+      //           ListTile(
+      //             leading: const Icon(Icons.work_history_rounded),
+      //             title: const Text('Order History'),
+      //             onTap: () {},
+      //           ),
+      //           ListTile(
+      //             leading: const Icon(Icons.sunny),
+      //             title: const Text('DarkMode'),
+      //             onTap: () {
+      //               // Navigate to Settings
+      //             },
+      //             trailing: Switch(
+      //                 value: widget.isDarkMode,
+      //                 onChanged: (value) {
+      //                   setState(() {
+      //                     widget.isDarkMode = value;
+      //                     widget.onThemeChanged(widget.isDarkMode);
+      //                   });
+      //                 }),
+      //           ),
+      //           ListTile(
+      //             leading: const Icon(Icons.logout_rounded),
+      //             title: const Text('Logout'),
+      //             onTap: () {
+      //               logout.logout(context);
+      //             },
+      //           )
+      //         ],
+      //       )
+      //     ],
+      //   ),
+      // ),
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Image.asset(
@@ -129,15 +130,6 @@ class _HomePageState extends State<HomePage> {
           scale: 2,
         ),
         centerTitle: true,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 10.0),
-            child: CircleAvatar(
-              backgroundColor: Color(0xffF83758),
-              child: Icon(Icons.person),
-            ),
-          )
-        ],
       ),
       body: SafeArea(
           child: PageView(
@@ -148,16 +140,21 @@ class _HomePageState extends State<HomePage> {
           });
         },
         children: [
-          _buildHomeContent(),
-          AllProducts(),
-          FavoritesScreen(),
-          CartScreen(),
+          const _buildHomeContent(),
+          const AllProducts(),
+          const SearchedPage(),
+          const FavoritesScreen(),
+          const CartScreen(),
+          AccountsScreen(
+            isDarkMode: widget.isDarkMode,
+            onThemeChanged: widget.onThemeChanged,
+          )
         ],
       )),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         elevation: 0,
-        backgroundColor: const Color.fromARGB(255, 238, 237, 237),
+        // backgroundColor: const Color.fromARGB(255, 238, 237, 237),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -168,6 +165,10 @@ class _HomePageState extends State<HomePage> {
             label: 'All Products',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
             label: 'Favorites',
           ),
@@ -175,16 +176,21 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.shopping_cart),
             label: 'Cart',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Account',
+          ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xffF83758),
-        unselectedItemColor: Colors.black,
+        selectedItemColor: const Color(0xffF83758),
+        // unselectedItemColor: Colors.black,
         onTap: _onItemTapped,
       ),
     );
   }
 }
 
+// ignore: camel_case_types
 class _buildHomeContent extends StatelessWidget {
   const _buildHomeContent();
 
@@ -192,30 +198,16 @@ class _buildHomeContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-
-            //TextField
-            TextField(
-              decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(20),
-                  fillColor: Colors.white,
-                  // filled: true,
-                  prefixIcon: Icon(Icons.search_rounded),
-                  suffixIcon: Icon(Icons.subdirectory_arrow_right),
-                  hintText: "Search any Product...",
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.all(Radius.circular(10)))),
-            ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
@@ -224,30 +216,28 @@ class _buildHomeContent extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-
-            CategoryWdiget(),
-
-            SizedBox(
+            const CategoryWdiget(),
+            const SizedBox(
               height: 20,
             ),
             Container(
               height: 220,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('assets/images/Group 33731.png'))),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            DealOfTheDay(),
-            SizedBox(
+            const DealOfTheDay(),
+            const SizedBox(
               height: 20,
             ),
-            ProductsWidget(),
+            const ProductsWidget(),
           ],
         ),
       ),

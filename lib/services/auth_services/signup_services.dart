@@ -8,11 +8,12 @@ import 'package:stylish_flutter/screens/login.dart';
 
 class SignUpServices {
   Future<bool> signUp(
-    BuildContext context,
-    String email,
-    String password,
-    String fullName,
-  ) async {
+      BuildContext context,
+      String email,
+      String password,
+      String fullName,
+      bool isDarkMode,
+      ValueChanged<bool> onThemeChanged) async {
     UserCredential? credentials;
     try {
       credentials = await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -30,7 +31,10 @@ class SignUpServices {
         Navigator.popUntil(context, (route) => route.isFirst);
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
-          return LoginScreen();
+          return LoginScreen(
+            isDarkMode: isDarkMode,
+            onThemeChanged: onThemeChanged,
+          );
         }));
       });
       return true;
@@ -39,7 +43,7 @@ class SignUpServices {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.message!)));
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("An unexpected error occurred. Please try again.")));
     }
     return false;

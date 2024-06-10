@@ -17,7 +17,7 @@ class _ProductsWidgetState extends State<ProductsWidget> {
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<ProductsProvider>(context);
     log("Products card");
-    return Container(
+    return SizedBox(
       // clipBehavior: Clip.none,
       height: MediaQuery.of(context).size.height / 2.2,
       // height: 320,
@@ -65,15 +65,15 @@ class _ProductsWidgetState extends State<ProductsWidget> {
                               products.title!,
                               maxLines: 1,
                               // overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
                               products.description!,
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -81,8 +81,8 @@ class _ProductsWidgetState extends State<ProductsWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "\u20B9" + products.price!.toString(),
-                                  style: TextStyle(
+                                  "\u20B9${products.price!}",
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
@@ -105,18 +105,18 @@ class _ProductsWidgetState extends State<ProductsWidget> {
                                     ))
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Row(
                               children: [
-                                Icon(Icons.star),
-                                SizedBox(
+                                const Icon(Icons.star),
+                                const SizedBox(
                                   width: 5,
                                 ),
                                 Text(
                                   "${products.rating?.rate ?? 0} (${products.rating?.count ?? 0}) reviews",
-                                  style: TextStyle(fontSize: 12),
+                                  style: const TextStyle(fontSize: 12),
                                 )
                               ],
                             )

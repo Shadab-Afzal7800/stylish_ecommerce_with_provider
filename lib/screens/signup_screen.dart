@@ -1,17 +1,20 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-
 import 'package:stylish_flutter/models/user_model.dart';
 import 'package:stylish_flutter/screens/login.dart';
 import 'package:stylish_flutter/services/auth_services/signup_services.dart';
 
 class SignupScreen extends StatefulWidget {
   final UserModel? userModel;
-  const SignupScreen({
-    Key? key,
+  ValueChanged<bool> onThemeChanged;
+  bool isDarkMode;
+  SignupScreen({
+    super.key,
     this.userModel,
-  }) : super(key: key);
+    required this.onThemeChanged,
+    required this.isDarkMode,
+  });
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -38,14 +41,14 @@ class _SignupScreenState extends State<SignupScreen> {
         confirmPassword.isEmpty ||
         fullName.isEmpty) {
       log("Please fill all the fields");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Please fill all the fields"),
         backgroundColor: Color(0xffF83758),
         duration: Duration(seconds: 3),
       ));
     } else if (password != confirmPassword) {
       log("Passwords do not match");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Passwords do not match"),
         backgroundColor: Color(0xffF83758),
         duration: Duration(seconds: 3),
@@ -55,7 +58,8 @@ class _SignupScreenState extends State<SignupScreen> {
         _isLoading = true;
       });
 
-      await signUpServices.signUp(context, email, password, fullName);
+      await signUpServices.signUp(context, email, password, fullName,
+          widget.isDarkMode, widget.onThemeChanged);
       setState(() {
         _isLoading = false;
       });
@@ -189,11 +193,11 @@ class _SignupScreenState extends State<SignupScreen> {
                         borderRadius: BorderRadius.circular(14)),
                     child: Center(
                         child: _isLoading
-                            ? CircularProgressIndicator(
+                            ? const CircularProgressIndicator(
                                 valueColor:
                                     AlwaysStoppedAnimation(Colors.white),
                               )
-                            : Text(
+                            : const Text(
                                 "CREATE ACCOUNT",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 25),
@@ -244,7 +248,10 @@ class _SignupScreenState extends State<SignupScreen> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return const LoginScreen();
+                          return LoginScreen(
+                            isDarkMode: widget.isDarkMode,
+                            onThemeChanged: widget.onThemeChanged,
+                          );
                         }));
                       },
                       child: RichText(

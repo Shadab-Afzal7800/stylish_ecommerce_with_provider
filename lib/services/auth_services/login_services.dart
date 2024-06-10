@@ -25,7 +25,7 @@ class LoginServices {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.message!)));
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("An unexpected error occurred. Please try again.")));
     }
     return false;

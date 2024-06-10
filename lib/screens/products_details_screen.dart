@@ -10,10 +10,10 @@ class ProductsDetailsScreen extends StatefulWidget {
 
   final int productId;
   const ProductsDetailsScreen({
-    Key? key,
+    super.key,
     required this.product,
     required this.productId,
-  }) : super(key: key);
+  });
 
   @override
   State<ProductsDetailsScreen> createState() => _ProductsDetailsScreenState();
@@ -34,9 +34,9 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
             child: IconButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CartScreen()));
+                    MaterialPageRoute(builder: (context) => const CartScreen()));
               },
-              icon: Icon(Icons.shopping_cart),
+              icon: const Icon(Icons.shopping_cart),
             ),
           )
         ],
@@ -55,7 +55,7 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Image.network(widget.product.image!)),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Row(
@@ -67,7 +67,7 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                       overflow: TextOverflow.ellipsis,
                       widget.product.title!,
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                   ),
                   IconButton(
@@ -88,38 +88,38 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                       ))
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
                 children: [
-                  Icon(Icons.star),
-                  SizedBox(
+                  const Icon(Icons.star),
+                  const SizedBox(
                     width: 5,
                   ),
                   Text(
                     "${widget.product.rating?.rate ?? 0} (${widget.product.rating?.count ?? 0}) reviews",
-                    style: TextStyle(fontSize: 12),
+                    style: const TextStyle(fontSize: 12),
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
                 "Price: \u20B9${widget.product.price.toString()}",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
-              Divider(),
-              SizedBox(
+              const Divider(),
+              const SizedBox(
                 height: 15,
               ),
-              Text(
+              const Text(
                 "Product Details",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
-              Text("${widget.product.description!}"),
-              SizedBox(
+              Text(widget.product.description!),
+              const SizedBox(
                 height: 15,
               ),
               Row(
@@ -130,7 +130,7 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                       child: Image.asset("assets/images/buy-now-button.png")),
                   GestureDetector(
                       onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text("Added to Cart"),
                           backgroundColor: Color(0xffF83758),
                           duration: Duration(seconds: 2),
@@ -145,14 +145,14 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                           Image.asset("assets/images/go-to-cart-button.png")),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Image.asset("assets/images/Group 33819.png"),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
             ],
