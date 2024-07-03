@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:stylish_flutter/screens/get_started.dart';
+import 'package:stylish_flutter/view/get_started.dart';
 
 class LoginServices {
   Future<bool> login(

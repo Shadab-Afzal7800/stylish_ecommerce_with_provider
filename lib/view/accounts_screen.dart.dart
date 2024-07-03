@@ -29,42 +29,6 @@ class _AccountsScreenState extends State<AccountsScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            Material(
-              elevation: 5,
-              shadowColor: const Color(0xffF83758),
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: const BoxDecoration(),
-                child: Row(
-                  children: [
-                    const CircleAvatar(
-                      radius: 50,
-                      child: Text(
-                        "",
-                        style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.userModel?.fullname ?? 'Guest',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(widget.userModel?.email ?? 'Email'),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
             const SizedBox(
               height: 10,
             ),

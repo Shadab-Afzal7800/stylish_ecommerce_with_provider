@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:stylish_flutter/screens/onboarding_screens/screen1.dart';
-import 'package:stylish_flutter/screens/onboarding_screens/screen2.dart';
-import 'package:stylish_flutter/screens/onboarding_screens/screen3.dart';
+import 'package:stylish_flutter/view/onboarding_screens/screen1.dart';
+import 'package:stylish_flutter/view/onboarding_screens/screen2.dart';
+import 'package:stylish_flutter/view/onboarding_screens/screen3.dart';
 
+// ignore: must_be_immutable
 class Onboarding extends StatefulWidget {
   ValueChanged<bool> onThemeChanged;
   bool isDarkMode;

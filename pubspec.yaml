@@ -44,6 +44,8 @@ dependencies:
   pin_input_text_field: ^4.5.1
 
   http: any
+  image_picker: ^1.1.2
+  image_cropper: ^7.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

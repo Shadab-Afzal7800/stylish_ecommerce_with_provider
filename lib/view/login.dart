@@ -2,11 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:stylish_flutter/models/user_model.dart';
-import 'package:stylish_flutter/screens/forgot_password.dart';
-import 'package:stylish_flutter/screens/login_with_phone.dart';
-import 'package:stylish_flutter/screens/signup_screen.dart';
 import 'package:stylish_flutter/services/auth_services/login_services.dart';
+import 'package:stylish_flutter/view/signup_screen.dart';
 
+// ignore: must_be_immutable
 class LoginScreen extends StatefulWidget {
   final UserModel? userModel;
   ValueChanged<bool> onThemeChanged;
@@ -110,23 +109,23 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const ForgotPassword();
-                      }));
-                    },
-                    child: const Text(
-                      "Forgot Password?",
-                      style: TextStyle(color: Color(0xffF83758)),
-                    ),
-                  )
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     GestureDetector(
+              //       onTap: () {
+              //         Navigator.push(context,
+              //             MaterialPageRoute(builder: (context) {
+              //           return const ForgotPassword();
+              //         }));
+              //       },
+              //       child: const Text(
+              //         "Forgot Password?",
+              //         style: TextStyle(color: Color(0xffF83758)),
+              //       ),
+              //     )
+              //   ],
+              // ),
               const SizedBox(
                 height: 60,
               ),
@@ -156,36 +155,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: Colors.white, fontSize: 25),
                               )),
                   ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => LoginWithPhone(
-                                isDarkMode: widget.isDarkMode,
-                                onThemeChanged: widget.onThemeChanged,
-                              )));
-                },
-                child: Material(
-                  elevation: 10.0,
-                  shadowColor: const Color(0xffF3F3F3),
-                  borderRadius: const BorderRadius.all(Radius.circular(14)),
-                  child: Container(
-                      height: 60,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14)),
-                      child: const Center(
-                        child: Text(
-                          "LOGIN with Phone",
-                          style: TextStyle(color: Colors.black, fontSize: 25),
-                        ),
-                      )),
                 ),
               ),
               const SizedBox(

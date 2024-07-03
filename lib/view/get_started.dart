@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:stylish_flutter/models/user_model.dart';
-import 'package:stylish_flutter/screens/home_page.dart';
+import 'package:stylish_flutter/view/home_page.dart';
 
 // ignore: must_be_immutable
 class GetStarted extends StatelessWidget {

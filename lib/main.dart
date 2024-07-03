@@ -7,11 +7,11 @@ import 'package:provider/provider.dart';
 import 'package:stylish_flutter/models/user_model.dart';
 import 'package:stylish_flutter/provider/category_provider.dart';
 import 'package:stylish_flutter/provider/products_provider.dart';
-import 'package:stylish_flutter/screens/home_page.dart';
-import 'package:stylish_flutter/screens/login.dart';
-import 'package:stylish_flutter/screens/onboarding_screens/onboarding.dart';
-import 'package:stylish_flutter/screens/splash_screen.dart';
 import 'package:stylish_flutter/services/utilities/firebase_helper.dart';
+import 'package:stylish_flutter/view/home_page.dart';
+import 'package:stylish_flutter/view/login.dart';
+import 'package:stylish_flutter/view/onboarding_screens/onboarding.dart';
+import 'package:stylish_flutter/view/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

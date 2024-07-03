@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:stylish_flutter/models/products_model.dart';
 import 'package:stylish_flutter/provider/products_provider.dart';
-import 'package:stylish_flutter/screens/cart_screen.dart';
+import 'package:stylish_flutter/view/cart_screen.dart';
+import 'package:stylish_flutter/view/chaeckout_screen.dart';
 
 class ProductsDetailsScreen extends StatefulWidget {
   final ProductsModel product;
@@ -33,8 +33,10 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
             padding: const EdgeInsets.all(10.0),
             child: IconButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const CartScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CartScreen()));
               },
               icon: const Icon(Icons.shopping_cart),
             ),
@@ -66,8 +68,8 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       widget.product.title!,
-                      style:
-                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                   ),
                   IconButton(
@@ -108,7 +110,8 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
               ),
               Text(
                 "Price: \u20B9${widget.product.price.toString()}",
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               const Divider(),
               const SizedBox(
@@ -126,11 +129,17 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CheckoutScreen()));
+                      },
                       child: Image.asset("assets/images/buy-now-button.png")),
                   GestureDetector(
                       onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
                           content: Text("Added to Cart"),
                           backgroundColor: Color(0xffF83758),
                           duration: Duration(seconds: 2),

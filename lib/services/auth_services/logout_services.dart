@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:stylish_flutter/screens/login.dart';
+import 'package:stylish_flutter/view/login.dart';
 
 class LogoutServices {
   void logout(BuildContext context, bool isDarkMode,

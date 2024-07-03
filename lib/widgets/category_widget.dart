@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stylish_flutter/provider/category_provider.dart';
-import 'package:stylish_flutter/screens/category_wise_products.dart';
+import 'package:stylish_flutter/view/category_wise_products.dart';
 
 class CategoryWdiget extends StatefulWidget {
   const CategoryWdiget({super.key});

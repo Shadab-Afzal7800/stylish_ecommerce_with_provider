@@ -2,9 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:stylish_flutter/models/user_model.dart';
-import 'package:stylish_flutter/screens/login.dart';
 import 'package:stylish_flutter/services/auth_services/signup_services.dart';
+import 'package:stylish_flutter/view/login.dart';
 
+// ignore: must_be_immutable
 class SignupScreen extends StatefulWidget {
   final UserModel? userModel;
   ValueChanged<bool> onThemeChanged;
